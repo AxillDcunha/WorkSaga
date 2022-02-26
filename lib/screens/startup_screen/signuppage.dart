@@ -1,13 +1,25 @@
 // ignore_for_file: deprecated_member_use
 
 import 'dart:typed_data';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import '../../models/signupmodel.dart';
 import 'LoginPage.dart';
 
-class SignUp extends StatelessWidget {
+
+
+class SignUp extends StatefulWidget {
+  @override
+  State<SignUp> createState() => _SignUpState();
+}
+
+Future<SignupModel> createUser(String Email, String) async{
+
+}
+
+
+class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,15 +46,15 @@ class SignUp extends StatelessWidget {
                 child: Text(
                   "WORK SAGA",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      fontSize: 55,
-                      fontStyle: FontStyle.italic),
+                    fontFamily: 'NanumMyeongjo',
+                    color: Colors.black,
+                    fontSize: 40,
+                  ),
                 ),
               ),
             ),
             SizedBox(
-              height: 45,
+              height: 25,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -51,7 +63,7 @@ class SignUp extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(40),
-                    border: Border.all(color: Colors.black, width: 3)),
+                    border: Border.all(color: Color(0xff182a42), width: 3)),
                 child: TextField(
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(vertical: 15),
@@ -80,7 +92,7 @@ class SignUp extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(40),
-                    border: Border.all(color: Colors.black, width: 3)),
+                    border: Border.all(color: Color(0xff182a42), width: 3)),
                 child: TextField(
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(vertical: 15),
@@ -109,12 +121,12 @@ class SignUp extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(40),
-                    border: Border.all(color: Colors.black, width: 3)),
+                    border: Border.all(color: Color(0xff182a42), width: 3)),
                 child: TextField(
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(vertical: 15),
                     border: InputBorder.none,
-                    hintText: 'E-mail',
+                    hintText: 'Email',
                     hintStyle: TextStyle(
                       fontSize: 20,
                       color: Colors.black,
@@ -124,46 +136,76 @@ class SignUp extends StatelessWidget {
                     fontSize: 20,
                   ),
                   keyboardType: TextInputType.emailAddress,
+                  textInputAction: TextInputAction.next,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(40),
+                    border: Border.all(color: Color(0xff182a42), width: 3)),
+                child: TextField(
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(vertical: 15),
+                    border: InputBorder.none,
+                    hintText: 'Password',
+                    hintStyle: TextStyle(
+                      fontSize: 20,
+                      color: Colors.black,
+                    ),
+                  ),
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                  keyboardType: TextInputType.visiblePassword,
                   textInputAction: TextInputAction.done,
                 ),
               ),
             ),
             SizedBox(
-              height: 35,
+              height: 30,
             ),
             Container(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: FlatButton(
-                onPressed: () {},
-                child: Text(
-                  'Sign Up',
-                  style: TextStyle(
-                    fontSize: 23,
-                    color: Colors.white,
+                width: 110,
+                height: 45,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Color(0xff182a42),
+                      onPrimary: Color.fromARGB(255, 255, 255, 255)),
+                  onPressed: () {},
+                  child: Text(
+                    'Sign Up',
+                    style: TextStyle(fontSize: 20, fontFamily: 'NanumMyeongjo'),
                   ),
-                ),
-              ),
-            ),
+                )),
             SizedBox(
-              height: 35,
+              height: 20,
             ),
             Container(
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(color: Colors.black, width: 1),
-                ),
+                child: TextButton(
+              child: Text(
+                'Already a customer? LogIn',
+                style: TextStyle(
+                  color: Color(0xff182a42),
+                  fontFamily: 'NanumMyeongjo',
+                  decoration: TextDecoration.underline,
               ),
-              child: TextButton(
-                
-                  child: Text('Already a customer? LogIn', style: TextStyle(color: Colors.black),),
-                  onPressed: () => {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()))
-                  },
-                )
-            )
+              ),
+              onPressed: () => {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LoginPage()))
+              },
+            ))
           ],
         ),
       ),
