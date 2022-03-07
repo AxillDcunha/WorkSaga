@@ -3,6 +3,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:worksaga/screens/home_screen/home.dart';
+
+import 'package:worksaga/screens/location/location_detect.dart';
 import 'signuppage.dart';
 
 class LoginPage extends StatefulWidget {
@@ -13,7 +16,9 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -32,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
               ],
             ),
             SizedBox(
-              height: 70,
+              height: 50,
             ),
             Center(
               child: Container(
@@ -117,14 +122,17 @@ class _LoginPageState extends State<LoginPage> {
                   style: ElevatedButton.styleFrom(
                       primary: Color(0xff182a42),
                       onPrimary: Color.fromARGB(255, 255, 255, 255)),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => HomePage()));
+                  },
                   child: Text(
                     'Log In',
                     style: TextStyle(fontSize: 20, fontFamily: 'NanumMyeongjo'),
                   ),
                 )),
             SizedBox(
-              height: 45,
+              height: 35,
             ),
             Container(
                 child: TextButton(
@@ -146,5 +154,6 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
-  }
+  });
+}
 }
