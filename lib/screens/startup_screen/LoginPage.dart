@@ -1,17 +1,58 @@
+import 'dart:convert';
 import 'dart:typed_data';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:worksaga/screens/appbars/homepage_appbar.dart';
 import 'package:worksaga/screens/home_screen/home.dart';
-
-import 'package:worksaga/screens/location/location_detect.dart';
+import 'package:http/http.dart' as http;
+import '../../models/signupmodel.dart';
 import 'signuppage.dart';
+
 
 class LoginPage extends StatefulWidget {
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
+
+Future<void> login( String email, String password ) async {
+  final response = await http.post(
+    Uri.parse('https://worksaga.herokuapp.com/api/auth/login'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+      'email': email,
+      'password': password,
+    }),
+  );
+
+  if (response.statusCode == 200) {
+    // If the server did return a 201 CREATED response,
+    // then parse the JSON.
+    
+    final responseJson = jsonDecode(response.body).cast<Map<String, dynamic>>();
+    print(responseJson);
+
+    final prefs = await SharedPreferences.getInstance();
+
+// set value
+    prefs.setString('auth-token', responseJson);
+  } else if (response.statusCode == 400) {
+    print(response.body);
+  } else {
+    // If the server did not return a 201 CREATED response,
+    // then throw an exception.
+    throw Exception('Failed to create data.');
+  }
+}
+
+
+TextEditingController _email = TextEditingController();
+TextEditingController _password = TextEditingController();
+
+
 
 class _LoginPageState extends State<LoginPage> {
   @override
@@ -40,6 +81,7 @@ class _LoginPageState extends State<LoginPage> {
               height: 50,
             ),
             Center(
+              
               child: Container(
                 child: Text(
                   "WORK SAGA",
@@ -64,6 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                     borderRadius: BorderRadius.circular(40),
                     border: Border.all(color: Color(0xff182a42), width: 3)),
                 child: TextField(
+                  controller: _email,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(vertical: 15),
                     border: InputBorder.none,
@@ -91,6 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                     borderRadius: BorderRadius.circular(40),
                     border: Border.all(color: Color(0xff182a42), width: 3)),
                 child: TextField(
+                  controller: _password,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(vertical: 15),
                     border: InputBorder.none,
@@ -123,8 +167,7 @@ class _LoginPageState extends State<LoginPage> {
                       primary: Color(0xff182a42),
                       onPrimary: Color.fromARGB(255, 255, 255, 255)),
                   onPressed: () {
-                    Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => HomePage()));
+                   login(_email.text , _password.text);
                   },
                   child: Text(
                     'Log In',
@@ -147,7 +190,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               onPressed: () => {
                 Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => SignUp()))
+                    context, MaterialPageRoute(builder: (context) => HomePage()))
               },
             ))
           ],

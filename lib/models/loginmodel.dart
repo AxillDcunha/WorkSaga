@@ -1,17 +1,16 @@
 import 'dart:convert';
 
-class SignupModel {
+class LoginModel {
   final String email;
   final String password;
-  final String mobileNo;
+  
 
-  const SignupModel({required this.password, required this.email, required this.mobileNo});
+  const LoginModel({required this.password, required this.email});
 
-  factory SignupModel.fromJson(Map<String, dynamic> json) {
-    return SignupModel(
+  factory LoginModel.fromJson(Map<String, dynamic> json) {
+    return LoginModel(
       email: json['email'],
       password : json['password'],
-      mobileNo: json['mobileNo']
     );
   }
 }

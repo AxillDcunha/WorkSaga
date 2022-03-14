@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, prefer_const_constructors
 
 import 'dart:convert';
 import 'dart:typed_data';
@@ -201,7 +201,7 @@ class _SignUpState extends State<SignUp> {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(40),
                     border: Border.all(color: Color(0xff182a42), width: 3)),
-                child: Container(
+                child: SizedBox(
                   height: 40,
                   child: TextField(
                     obscureText: _isObscure,
