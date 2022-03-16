@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:worksaga/screens/appbars/homepage_appbar.dart';
+import 'package:worksaga/widgets/homepage_appbar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -9,11 +9,97 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   final scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(82),
+        child: AppBar(
+          backgroundColor: Colors.white,
+          automaticallyImplyLeading: false,
+          flexibleSpace: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 14),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Work Saga',
+                              style: TextStyle(
+                                fontFamily: 'Poppins',
+                                color: Color(0xFF084E35),
+                                fontSize: 22,
+                              ),
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                ElevatedButton.icon(
+                                  onPressed: () {
+                                    print('Button pressed ...');
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                      primary: Colors.white,
+                                      shadowColor: Colors.white,
+                                      elevation: 0),
+                                  icon: Icon(
+                                    Icons.location_city,
+                                    color: Color.fromARGB(255, 0, 0, 0),
+                                    size: 18.0,
+                                  ),
+                                  label: Text(
+                                    'Location',
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+                        child: ElevatedButton.icon(
+                          icon: Icon(
+                            Icons.search_sharp,
+                            color: Colors.black,
+                            size: 30,
+                          ),
+                          style: ElevatedButton.styleFrom(
+                              primary: Colors.white,
+                              shadowColor: Colors.white,
+                              elevation: 0),
+                          onPressed: () {
+                            print('IconButton pressed ...');
+                          },
+                          label: Text(''),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: [],
+          elevation: 0,
+        ),
+      ),
+
       key: scaffoldKey,
       backgroundColor: Colors.white,
       body: Padding(
@@ -35,10 +121,10 @@ class _HomePageState extends State<HomePage> {
                     'A whole world of freelance talent at your fingertips. ',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                          fontFamily: 'Poppins',
-                          color: Colors.black,
-                          fontSize: 12,
-                        ),
+                      fontFamily: 'Poppins',
+                      color: Colors.black,
+                      fontSize: 12,
+                    ),
                   ),
                 ),
               ),
@@ -49,7 +135,6 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Expanded(
                       child: ListView(
-                        
                         padding: EdgeInsets.zero,
                         shrinkWrap: true,
                         scrollDirection: Axis.vertical,
@@ -177,8 +262,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     Text(
                                       'Hello World',
-                                      style:
-                                          TextStyle(color: Colors.black),
+                                      style: TextStyle(color: Colors.black),
                                     ),
                                   ],
                                 ),
@@ -197,8 +281,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     Text(
                                       'Hello World',
-                                      style:
-                                          TextStyle(color: Colors.black),
+                                      style: TextStyle(color: Colors.black),
                                     ),
                                   ],
                                 ),
@@ -217,8 +300,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     Text(
                                       'Hello World',
-                                      style:
-                                          TextStyle(color: Colors.black),
+                                      style: TextStyle(color: Colors.black),
                                     ),
                                   ],
                                 ),
@@ -237,8 +319,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     Text(
                                       'Hello World',
-                                      style:
-                                          TextStyle(color: Colors.black),
+                                      style: TextStyle(color: Colors.black),
                                     ),
                                   ],
                                 ),
@@ -257,8 +338,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     Text(
                                       'Hello World',
-                                      style:
-                                          TextStyle(color: Colors.black),
+                                      style: TextStyle(color: Colors.black),
                                     ),
                                   ],
                                 ),
@@ -321,8 +401,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     Text(
                                       'Hello World',
-                                      style:
-                                          TextStyle(color: Colors.black),
+                                      style: TextStyle(color: Colors.black),
                                     ),
                                   ],
                                 ),
@@ -346,8 +425,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     Text(
                                       'Hello World',
-                                      style:
-                                          TextStyle(color: Colors.black),
+                                      style: TextStyle(color: Colors.black),
                                     ),
                                   ],
                                 ),
@@ -371,8 +449,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     Text(
                                       'Hello World',
-                                      style:
-                                          TextStyle(color: Colors.black),
+                                      style: TextStyle(color: Colors.black),
                                     ),
                                   ],
                                 ),
@@ -396,8 +473,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     Text(
                                       'Hello World',
-                                      style:
-                                          TextStyle(color: Colors.black),
+                                      style: TextStyle(color: Colors.black),
                                     ),
                                   ],
                                 ),
@@ -421,8 +497,7 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     Text(
                                       'Hello World',
-                                      style:
-                                          TextStyle(color: Colors.black),
+                                      style: TextStyle(color: Colors.black),
                                     ),
                                   ],
                                 ),

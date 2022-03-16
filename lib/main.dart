@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:worksaga/screens/home_screen/home.dart';
 import 'screens/startup_screen/LoginPage.dart';
 import 'screens/startup_screen/splash.dart';
 
@@ -19,7 +20,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Work Saga',
-      home: SplashScreen(),
+      home: HomePage(),
     );
   }
 }
