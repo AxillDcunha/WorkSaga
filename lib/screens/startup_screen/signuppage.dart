@@ -1,10 +1,12 @@
-// ignore_for_file: deprecated_member_use, prefer_const_constructors
+// ignore_for_file: deprecated_member_use, prefer_const_constructors, unrelated_type_equality_checks
 
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:worksaga/widgets/navbar.dart';
+
 import '../../models/signupmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -35,18 +37,26 @@ Future<void> createAlbum(
     // If the server did return a 201 CREATED response,
     // then parse the JSON.
 
-    final responseJson = jsonDecode(response.body).cast<Map<String, dynamic>>();
-    print(responseJson);
-
-    final prefs = await SharedPreferences.getInstance();
-
+    final parsedJson = jsonDecode(response.body);
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    await sharedPreferences.setString('auth-token', parsedJson['authtoken']);
+    await sharedPreferences.setInt('isLoggedIn', 1);
 // set value
-    prefs.setString('auth-token', responseJson);
+
   } else if (response.statusCode == 400) {
     print(response.body);
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+
+    await sharedPreferences.setInt('isLoggedIn', 0);
   } else {
     // If the server did not return a 201 CREATED response,
     // then throw an exception.
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+
+    await sharedPreferences.setInt('isLoggedIn', 0);
     throw Exception('Failed to create data.');
   }
 }
@@ -61,6 +71,7 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -207,21 +218,19 @@ class _SignUpState extends State<SignUp> {
                     obscureText: _isObscure,
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.symmetric(vertical: 13),
-                      
                       border: InputBorder.none,
                       hintText: 'Password',
                       hintStyle: TextStyle(
                         fontSize: 17,
                         color: Colors.black,
                       ),
-                      
                       suffixIcon: Container(
-                        
                         child: IconButton(
                           color: Color.fromARGB(255, 0, 0, 0),
                           icon: Icon(
-                            
-                            _isObscure ? Icons.visibility : Icons.visibility_off,
+                            _isObscure
+                                ? Icons.visibility
+                                : Icons.visibility_off,
                           ),
                           onPressed: () {
                             setState(() {
@@ -254,9 +263,20 @@ class _SignUpState extends State<SignUp> {
                   style: ElevatedButton.styleFrom(
                       primary: Color(0xff182a42),
                       onPrimary: Color.fromARGB(255, 255, 255, 255)),
-                  onPressed: () {
+                  onPressed: () async {
                     createAlbum(_name.text, _email.text, _password.text,
                         _mobileNo.text);
+                    final prefs = await SharedPreferences.getInstance();
+                    var isLoggedIn = false;
+                    if ((prefs.getInt('isLoggedIn') == 1)) {
+                      isLoggedIn = true;
+                    }
+                    print(isLoggedIn);
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                isLoggedIn ? LoginPage() : Navbar()));
                   },
                   child: Text(
                     'Sign Up',

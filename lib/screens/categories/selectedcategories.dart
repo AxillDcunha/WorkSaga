@@ -1,9 +1,10 @@
-import 'dart:ffi';
-
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import '../../models/selectedcatmodel.api.dart';
+import 'package:worksaga/screens/freelancerprofile/freelancerprofile.dart';
 import '../../models/selectedcatmodel.dart';
+import '../../widgets/selectedcatwidget.dart';
 import 'categories.dart';
 import 'package:lottie/lottie.dart';
 
@@ -15,21 +16,32 @@ class SelectedCategories extends StatefulWidget {
 }
 
 class _SelectedCategoriesState extends State<SelectedCategories> {
-   late List<SelectedCategoriesModel> _SelectedCategorieslist;
-  bool isLoading = true;
+  Future<List<SelectedCategoriesModel>> getfreelancers() async {
+    List<SelectedCategoriesModel> docs = [];
 
-  @override
-  void initState() {
-    super.initState();
-    getCategorie();
-  }
+    // final pref = await SharedPreferences.getInstance();
+    // final email = pref.getString("email");
 
-  Future<void> getCategorie() async {
-    _SelectedCategorieslist = await Selectedlist.getCategories();
-    setState(() {
-      isLoading = false;
-    });
-    print(_SelectedCategorieslist);
+    final url =
+        Uri.parse("https://worksaga.herokuapp.com/api/user/findfreelancers");
+    var response = await http.get(
+      url,
+      headers: <String, String>{
+        'content-type': 'application/json',
+      },
+    );
+
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      print(response.body);
+      var data = jsonDecode(response.body) as List;
+      docs = data.map((e) => SelectedCategoriesModel.fromJson(e)).toList();
+    } else {
+      print(response.statusCode);
+    }
+    print(docs);
+
+    return docs;
   }
 
   @override
@@ -107,7 +119,51 @@ class _SelectedCategoriesState extends State<SelectedCategories> {
         ),
         SizedBox(height: 20),
         Column(
-          children: [],
+          children: [
+            FutureBuilder(
+                future: getfreelancers(),
+                builder: (context,
+                    AsyncSnapshot<List<SelectedCategoriesModel>> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(
+                      child: Text("Error Occured"),
+                    );
+                  } else if (snapshot.connectionState == ConnectionState.done) {
+                    return ListView.builder(
+                        padding: EdgeInsets.zero,
+                        itemCount: snapshot.data!.length,
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (BuildContext, index) {
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => FreelancerProfile(
+                                          value: snapshot.data![index].id)));
+                            },
+                            child: SelectedCategoriesWidget(
+                              name: snapshot.data![index].name,
+                              bio: snapshot.data![index].bio,
+                              banner: snapshot.data![index].banner,
+                              id: snapshot.data![index].id,
+                              Avatar: snapshot.data![index].Avatar,
+                              rating: snapshot.data![index].rating,
+                            ),
+                          );
+                        });
+                  }
+                  return Text("Error Occured");
+                }),
+            SizedBox(
+              height: 20.0,
+            )
+          ],
         )
       ],
     )));

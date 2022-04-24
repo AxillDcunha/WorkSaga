@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:worksaga/screens/booking/booking.dart';
 import 'package:worksaga/screens/categories/categories.dart';
 import 'package:worksaga/screens/categories/selectedcategories.dart';
 import 'package:worksaga/screens/home_screen/home.dart';
@@ -17,7 +18,7 @@ class NavbarState extends State<Navbar> {
   final List<Widget> _children = [
     HomePage(),
     Categories(),
-    SelectedCategories(value: 'Electrician',),
+    Bookings(),
     Profile()
   ];
   @override

@@ -1,30 +1,38 @@
-class SelectedCategoriesModel{
-  late String name ;
-  late String Avatar;
-  late String bio;
-  late String banner;
-  late double rating;
-  
-  SelectedCategoriesModel({required this.name, required this.Avatar, required this.bio, required this.banner, required this.rating});
+class SelectedCategoriesModel {
+  SelectedCategoriesModel({
+    required this.id,
+    required this.name,
+    required this.bio,
+    required this.Avatar,
+    required this.banner,
+    required this.rating
+  });
+  late final String id;
+  late final String name;
+  late final String bio;
+  late final String Avatar;
+  late final String banner;
+  late final int rating;
 
-  factory SelectedCategoriesModel.fromJson(dynamic json) {
-    return SelectedCategoriesModel(
-        name: json['name'] as String,
-        banner: json['banner'] as String,
-        Avatar: json['Avatar'] as String,
-        rating: json['rating'] as double,
-        bio: json['bio'] as String);
+  SelectedCategoriesModel.fromJson(Map<String, dynamic> json) {
+    id = json['_id'];
+    name = json['name'];
+    bio = json['bio'];
+    Avatar = json['Avatar'];
+    banner = json['banner'];
+    rating = json['rating'];
+
   }
 
-  static List<SelectedCategoriesModel> recipesFromSnapshot(List snapshot) {
-    return snapshot.map((data) {
-      return SelectedCategoriesModel.fromJson(data);
-    }).toList();
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['_id'] = id;
+    _data['name'] = name;
+    _data['bio'] = bio;
+    _data['Avatar'] = Avatar;
+    _data['banner'] = banner;
+    _data['rating'] = rating;
+    return _data;
   }
-
-  @override
-  String toString(){
-    return 'SelectedCategoriesModel{name: $name, banner: $banner, rating: $rating, Avatar: $Avatar, bio: $bio}';
-  }
-  
 }
+

@@ -19,7 +19,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Work Saga',
-      home: Navbar(),
+      home: LoginPage(),
     );
   }
 }

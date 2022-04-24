@@ -10,15 +10,18 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:http/http.dart' as http;
 import '../../widgets/homepage_appbar.dart';
 
+
 class Profile extends StatefulWidget {
   @override
   _ProfileState createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
-  late String name;
-  late PageController pageViewController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +125,7 @@ class _ProfileState extends State<Profile> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         33, 0, 0, 0),
                                     child: Text(
-                                      "helllo",
+                                      "lauren jason gonsalves",
                                       style: TextStyle(
                                         color: Colors.black,
                                         fontFamily: 'Poppins',
